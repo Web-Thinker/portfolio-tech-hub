@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты - TechPortfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: { DEFAULT: '#FFFFFF', muted: '#F8FAFC' },
+                        accent: { blue: '#2563EB', orange: '#F97316' },
+                        neutral: { primary: '#1E293B', secondary: '#64748B', border: '#E2E8F0' }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card { @apply bg-white/80 backdrop-blur-md border border-neutral-border/50 rounded-xl shadow-lg; }
+    </style>
+</head>
+<body class="bg-bg text-neutral-primary font-sans antialiased">
+    <header class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-neutral-border/50">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="index.html" class="text-2xl font-bold font-mono text-accent-blue">TechPortfolio</a>
+            <div class="hidden md:flex gap-6 items-center">
+                <a href="index.html" class="text-neutral-secondary hover:text-accent-blue transition">Главная</a>
+                <a href="services.html" class="text-neutral-secondary hover:text-accent-blue transition">Услуги</a>
+                <a href="blog.html" class="text-neutral-secondary hover:text-accent-blue transition">Блог</a>
+                <a href="about.html" class="text-neutral-secondary hover:text-accent-blue transition">Обо мне</a>
+                <a href="contacts.html" class="text-accent-blue font-medium">Контакты</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="pt-32 pb-20 container mx-auto px-4">
+        <div class="max-w-2xl mx-auto">
+            <h1 class="text-4xl font-bold text-center mb-12">Контакты</h1>
+            <div class="glass-card p-8">
+                <div class="space-y-6 mb-8">
+                    <div>
+                        <h3 class="font-semibold mb-2">Email</h3>
+                        <p class="text-neutral-secondary">contact@techportfolio.ru</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Telegram</h3>
+                        <p class="text-neutral-secondary">@techportfolio</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">Режим работы</h3>
+                        <p class="text-neutral-secondary">Пн-Пт: 9:00 - 18:00</p>
+                    </div>
+                </div>
+                <button onclick="openModal()" class="btn-primary w-full py-3 text-lg">
+                    Отправить сообщение
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div id="contactModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="absolute inset-0 flex items-center justify-center p-4">
+            <form id="contactForm" class="glass-card w-full max-w-md p-6 space-y-4 relative" onsubmit="handleSubmit(event)">
+                <h3 class="text-xl font-semibold">Связаться со мной</h3>
+                <input type="hidden" name="honeypot" class="hidden" autocomplete="off">
+                <div>
+                    <input type="text" name="fullName" required minlength="2" maxlength="50" placeholder="ФИО" 
+                           class="w-full p-3 rounded bg-transparent border border-neutral-border focus:border-accent-blue outline-none">
+                </div>
+                <div>
+                    <input type="text" name="contact" required placeholder="Email или Телефон" 
+                           class="w-full p-3 rounded bg-transparent border border-neutral-border focus:border-accent-blue outline-none">
+                </div>
+                <div>
+                    <textarea name="message" required minlength="10" maxlength="1000" rows="4" placeholder="Сообщение" 
+                              class="w-full p-3 rounded bg-transparent border border-neutral-border focus:border-accent-blue outline-none resize-none"></textarea>
+                </div>
+                <div class="h-captcha" data-sitekey="10000000-ffff-ffff-ffff-000000000001"></div>
+                <button type="submit" class="btn-primary w-full">Отправить заявку</button>
+                <button type="button" onclick="closeModal()" class="btn-secondary w-full">Закрыть</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

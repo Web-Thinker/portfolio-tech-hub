@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блог - TechPortfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: { DEFAULT: '#FFFFFF', muted: '#F8FAFC' },
+                        accent: { blue: '#2563EB', orange: '#F97316' },
+                        neutral: { primary: '#1E293B', secondary: '#64748B', border: '#E2E8F0' }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card { @apply bg-white/80 backdrop-blur-md border border-neutral-border/50 rounded-xl shadow-lg; }
+    </style>
+</head>
+<body class="bg-bg text-neutral-primary font-sans antialiased">
+    <header class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-neutral-border/50">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="index.html" class="text-2xl font-bold font-mono text-accent-blue">TechPortfolio</a>
+            <div class="hidden md:flex gap-6 items-center">
+                <a href="index.html" class="text-neutral-secondary hover:text-accent-blue transition">Главная</a>
+                <a href="services.html" class="text-neutral-secondary hover:text-accent-blue transition">Услуги</a>
+                <a href="blog.html" class="text-accent-blue font-medium">Блог</a>
+                <a href="about.html" class="text-neutral-secondary hover:text-accent-blue transition">Обо мне</a>
+                <a href="contacts.html" class="text-neutral-secondary hover:text-accent-blue transition">Контакты</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="pt-32 pb-20 container mx-auto px-4">
+        <h1 class="text-4xl font-bold text-center mb-12">Блог</h1>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="posts-grid"></div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', loadPosts);
+    </script>
+</body>
+</html>
