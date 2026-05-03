@@ -1,5 +1,3 @@
-# portfolio-tech-hub
-
 # TechPortfolio - Статический сайт-портфолио
 
 **Версия:** 3.0.0  
