@@ -24,6 +24,25 @@ if (!isset($input['message']) || strlen($input['message']) < 10 || strlen($input
     $errors['message'] = 'Сообщение должно содержать от 10 до 1000 символов';
 }
 
+// Verify hCaptcha
+if (!isset($input['h-captcha-response']) || empty($input['h-captcha-response'])) {
+    $errors['captcha'] = 'Пройдите проверку hCaptcha';
+} else {
+    $verifyUrl = 'https://hcaptcha.com/siteverify';
+    $verifyData = http_build_query([
+        'secret' => 'YOUR_HCAPTCHA_SECRET', // Замените на ваш секретный ключ
+        'response' => $input['h-captcha-response'],
+        'remoteip' => $_SERVER['REMOTE_ADDR']
+    ]);
+    
+    $verifyResponse = @file_get_contents($verifyUrl . '?' . $verifyData);
+    $verifyResult = json_decode($verifyResponse, true);
+    
+    if (!$verifyResult || !$verifyResult['success']) {
+        $errors['captcha'] = 'Ошибка проверки hCaptcha';
+    }
+}
+
 if (!empty($errors)) {
     http_response_code(400);
     echo json_encode(['errors' => $errors]);
@@ -33,7 +52,7 @@ if (!empty($errors)) {
 // Load config
 $config = require __DIR__ . '/../config.php';
 
-// Rate limiting (simple file-based)
+// Rate limiting
 $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
 $rateFile = sys_get_temp_dir() . '/rate_' . md5($ip);
 $now = time();
@@ -63,7 +82,7 @@ try {
     $stmt = $pdo->prepare("INSERT INTO applications (full_name, contact, message, status, created_at) VALUES (?, ?, ?, 'new', NOW())");
     $stmt->execute([$input['fullName'], $input['contact'], $input['message']]);
     
-    // Send email if enabled
+    // Send email
     if ($config['email']['enabled']) {
         $to = $config['email']['admin'];
         $subject = "Новая заявка от {$input['fullName']}";
@@ -73,7 +92,7 @@ try {
         mail($to, $subject, $body, $headers);
     }
     
-    // Send Telegram if enabled
+    // Send Telegram
     if ($config['telegram']['enabled']) {
         $text = "📩 Заявка:\n👤 {$input['fullName']}\n📞 {$input['contact']}\n💬 {$input['message']}";
         $url = "https://api.telegram.org/bot{$config['telegram']['token']}/sendMessage";

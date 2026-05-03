@@ -6,96 +6,204 @@
     <title>TechPortfolio - Программирование. Дизайн. DevOps.</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        bg: { DEFAULT: '#FFFFFF', muted: '#F8FAFC', dark: '#0F172A' },
-                        accent: { blue: '#2563EB', orange: '#F97316' },
-                        neutral: { primary: '#1E293B', secondary: '#64748B', border: '#E2E8F0' }
+                        primary: { 50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1' },
+                        accent: { blue: '#2563EB', orange: '#F97316', purple: '#8B5CF6' },
+                        neutral: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 700: '#334155', 800: '#1e293b', 900: '#0f172a' }
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace']
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } }
                     }
                 }
             }
         }
     </script>
     <style>
-        .glass-card { @apply bg-white/80 backdrop-blur-md border border-neutral-border/50 rounded-xl shadow-lg; }
-        .btn-primary { @apply bg-accent-blue hover:bg-blue-700 text-white font-medium px-5 py-2.5 rounded-lg transition-all duration-200; }
-        .btn-secondary { @apply bg-neutral-border/50 hover:bg-accent-orange/20 hover:text-accent-orange text-neutral-secondary font-medium px-5 py-2.5 rounded-lg transition-all duration-200; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #2563EB 0%, #F97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #2563EB 0%, #1d4ed8 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
-<body class="bg-bg text-neutral-primary font-sans antialiased">
+<body class="bg-neutral-50 text-neutral-800 font-sans antialiased">
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 glass-card border-b border-neutral-border/50">
-        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
-            <a href="index.html" class="text-2xl font-bold font-mono text-accent-blue">TechPortfolio</a>
-            <div class="hidden md:flex gap-6 items-center">
-                <a href="index.html" class="text-neutral-secondary hover:text-accent-blue transition">Главная</a>
-                <a href="services.html" class="text-neutral-secondary hover:text-accent-blue transition">Услуги</a>
-                <a href="blog.html" class="text-neutral-secondary hover:text-accent-blue transition">Блог</a>
-                <a href="about.html" class="text-neutral-secondary hover:text-accent-blue transition">Обо мне</a>
-                <a href="contacts.html" class="text-neutral-secondary hover:text-accent-blue transition">Контакты</a>
-                <button onclick="openModal()" class="btn-primary">Связаться со мной</button>
-                <button onclick="toggleLang()" class="px-3 py-1 rounded border border-neutral-border hover:bg-neutral-border/30">EN</button>
+    <header class="fixed top-0 left-0 right-0 z-50 glass-card shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="index.html" class="text-2xl font-bold font-mono gradient-text">TechPortfolio</a>
+            <div class="hidden md:flex gap-8 items-center">
+                <a href="index.html" class="text-neutral-700 hover:text-accent-blue transition font-medium">Главная</a>
+                <a href="services.html" class="text-neutral-700 hover:text-accent-blue transition font-medium">Услуги</a>
+                <a href="blog.html" class="text-neutral-700 hover:text-accent-blue transition font-medium">Блог</a>
+                <a href="about.html" class="text-neutral-700 hover:text-accent-blue transition font-medium">Обо мне</a>
+                <a href="contacts.html" class="text-neutral-700 hover:text-accent-blue transition font-medium">Контакты</a>
+                <button onclick="openModal()" class="btn-primary text-white px-6 py-2.5 rounded-lg font-medium">
+                    Связаться со мной
+                </button>
+                <button onclick="toggleLang()" class="px-4 py-2 rounded-lg border border-neutral-200 hover:bg-neutral-100 transition font-medium">
+                    EN
+                </button>
             </div>
         </nav>
     </header>
 
     <!-- Hero Section -->
-    <section class="pt-32 pb-20 container mx-auto px-4 text-center">
-        <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6">
-            <span class="text-accent-blue">Программирование.</span>
-            <span class="text-accent-blue">Дизайн.</span>
-            <span class="text-accent-blue">DevOps.</span>
-        </h1>
-        <p class="text-neutral-secondary text-lg max-w-2xl mx-auto mb-10">
-            Полный цикл разработки цифровых продуктов: от идеи до запуска и поддержки
-        </p>
-        <div class="flex gap-4 justify-center">
-            <a href="services.html" class="btn-primary px-8 py-3 text-lg">Смотреть услуги</a>
-            <a href="contacts.html" class="btn-secondary px-8 py-3 text-lg">Контакты</a>
+    <section class="pt-40 pb-20 gradient-bg text-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center animate-slide-up">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                    Программирование.<br>
+                    <span class="text-blue-200">Дизайн.</span> 
+                    <span class="text-orange-200">DevOps.</span>
+                </h1>
+                <p class="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
+                    Полный цикл разработки цифровых продуктов: от идеи до запуска и поддержки
+                </p>
+                <div class="flex gap-4 justify-center flex-wrap">
+                    <a href="services.html" class="bg-white text-accent-blue px-8 py-4 rounded-lg font-semibold hover:bg-blue-50 transition shadow-lg">
+                        Смотреть услуги
+                    </a>
+                    <a href="contacts.html" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white/10 transition">
+                        Контакты
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Services Preview -->
-    <section class="py-20 bg-bg-muted">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">Мои услуги</h2>
-            <div class="grid md:grid-cols-3 gap-6" id="services-grid">
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4 gradient-text">Мои услуги</h2>
+            <p class="text-neutral-600 text-center mb-12 max-w-2xl mx-auto">Предлагаю комплексные решения для вашего бизнеса</p>
+            
+            <div class="grid md:grid-cols-3 gap-8" id="services-grid">
                 <!-- Services loaded dynamically -->
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="services.html" class="btn-primary text-white px-8 py-3 rounded-lg font-semibold inline-block">
+                    Все услуги →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-20 bg-neutral-100">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-8 rounded-2xl text-center">
+                    <div class="w-16 h-16 bg-accent-blue/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-accent-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Быстро</h3>
+                    <p class="text-neutral-600">Оптимальные сроки без потери качества</p>
+                </div>
+                <div class="glass-card p-8 rounded-2xl text-center">
+                    <div class="w-16 h-16 bg-accent-orange/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-accent-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Качественно</h3>
+                    <p class="text-neutral-600">Современные технологии и лучшие практики</p>
+                </div>
+                <div class="glass-card p-8 rounded-2xl text-center">
+                    <div class="w-16 h-16 bg-accent-purple/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-accent-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Поддержка</h3>
+                    <p class="text-neutral-600">Помощь на всех этапах проекта</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Modal -->
     <div id="contactModal" class="fixed inset-0 z-[100] hidden">
-        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal()"></div>
         <div class="absolute inset-0 flex items-center justify-center p-4">
-            <form id="contactForm" class="glass-card w-full max-w-md p-6 space-y-4 relative" onsubmit="handleSubmit(event)">
-                <h3 class="text-xl font-semibold">Связаться со мной</h3>
-                <input type="hidden" name="honeypot" class="hidden" autocomplete="off">
-                <div>
-                    <input type="text" name="fullName" required minlength="2" maxlength="50" placeholder="ФИО" 
-                           class="w-full p-3 rounded bg-transparent border border-neutral-border focus:border-accent-blue outline-none">
-                </div>
-                <div>
-                    <input type="text" name="contact" required placeholder="Email или Телефон" 
-                           class="w-full p-3 rounded bg-transparent border border-neutral-border focus:border-accent-blue outline-none">
-                </div>
-                <div>
-                    <textarea name="message" required minlength="10" maxlength="1000" rows="4" placeholder="Сообщение" 
-                              class="w-full p-3 rounded bg-transparent border border-neutral-border focus:border-accent-blue outline-none resize-none"></textarea>
-                </div>
-                <div class="h-captcha" data-sitekey="10000000-ffff-ffff-ffff-000000000001"></div>
-                <button type="submit" class="btn-primary w-full">Отправить заявку</button>
-                <button type="button" onclick="closeModal()" class="btn-secondary w-full">Закрыть</button>
-            </form>
+            <div class="glass-card w-full max-w-md p-8 rounded-2xl shadow-2xl relative animate-slide-up">
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-neutral-400 hover:text-neutral-600 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+                
+                <h3 class="text-2xl font-bold mb-6 gradient-text">Связаться со мной</h3>
+                
+                <form id="contactForm" onsubmit="handleSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-1">ФИО</label>
+                        <input type="text" name="fullName" required minlength="2" maxlength="50" 
+                               class="w-full px-4 py-3 rounded-lg border border-neutral-200 focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/20 outline-none transition bg-white/80"
+                               placeholder="Иван Иванов">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-1">Email или Телефон</label>
+                        <input type="text" name="contact" required 
+                               class="w-full px-4 py-3 rounded-lg border border-neutral-200 focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/20 outline-none transition bg-white/80"
+                               placeholder="example@mail.ru">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-1">Сообщение</label>
+                        <textarea name="message" required minlength="10" maxlength="1000" rows="4" 
+                                  class="w-full px-4 py-3 rounded-lg border border-neutral-200 focus:border-accent-blue focus:ring-2 focus:ring-accent-blue/20 outline-none transition resize-none bg-white/80"
+                                  placeholder="Расскажите о вашем проекте..."></textarea>
+                    </div>
+                    
+                    <div class="h-captcha" data-sitekey="10000000-ffff-ffff-ffff-000000000001"></div>
+                    
+                    <button type="submit" id="submitBtn" class="btn-primary w-full py-3 rounded-lg font-semibold text-white">
+                        Отправить заявку
+                    </button>
+                    
+                    <div id="formMessage" class="hidden p-3 rounded-lg text-sm"></div>
+                </form>
+            </div>
         </div>
     </div>
 
