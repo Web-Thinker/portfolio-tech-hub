@@ -2,6 +2,13 @@
 function openModal() {
     document.getElementById('contactModal').classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+    
+    // Initialize hCaptcha when modal opens
+    if (window.hcaptcha) {
+        setTimeout(() => {
+            hcaptcha.render();
+        }, 100);
+    }
 }
 
 function closeModal() {
@@ -22,6 +29,11 @@ function resetForm() {
         submitBtn.textContent = 'Отправить заявку';
         submitBtn.classList.remove('bg-green-600', 'bg-red-600');
         submitBtn.classList.add('btn-primary');
+        
+        // Reset hCaptcha
+        if (window.hcaptcha) {
+            hcaptcha.reset();
+        }
     }
 }
 
@@ -35,7 +47,7 @@ async function handleSubmit(e) {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
     
-    // Validate hCaptcha
+    // Get hCaptcha response
     const hcaptchaResponse = document.querySelector('[name="h-captcha-response"]');
     if (!hcaptchaResponse || !hcaptchaResponse.value) {
         showMessage('Пожалуйста, пройдите проверку hCaptcha', 'error');
@@ -98,15 +110,17 @@ async function loadServices() {
         
         if (grid && services.length > 0) {
             grid.innerHTML = services.slice(0, 3).map((service, index) => `
-                <div class="service-card glass-card p-6 rounded-2xl transition duration-300 animate-slide-up" style="animation-delay: ${index * 0.1}s">
+                <div class="service-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition duration-300 animate-slide-up" style="animation-delay: ${index * 0.1}s">
                     ${service.image_url ? `
-                        <img src="${service.image_url}" alt="${service.title_ru}" class="w-full h-48 object-cover rounded-xl mb-4">
-                    ` : ''}
-                    <h3 class="text-xl font-bold mb-2 text-neutral-800">${service.title_ru}</h3>
-                    <p class="text-neutral-600 mb-4">${service.description_ru || ''}</p>
-                    <a href="contacts.html" class="btn-primary text-white px-6 py-2 rounded-lg inline-block font-medium">
-                        Заказать
-                    </a>
+                        <img src="${service.image_url}" alt="${service.title_ru}" class="w-full h-48 object-cover">
+                    ` : '<div class="w-full h-48 bg-gradient-to-br from-blue-400 to-purple-500"></div>'}
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-neutral-800">${service.title_ru}</h3>
+                        <p class="text-neutral-600 mb-4">${service.description_ru || ''}</p>
+                        <a href="contacts.html" class="btn-primary text-white px-6 py-2 rounded-lg inline-block font-medium">
+                            Заказать
+                        </a>
+                    </div>
                 </div>
             `).join('');
         }

@@ -15,5 +15,8 @@ return [
         'enabled' => false,
         'token' => 'your_bot_token',
         'chat_id' => 'your_chat_id'
-    ]
+    ],
+    'hcaptcha' => [
+        'secret' => 'your_hcaptcha_secret',
+    ],
 ];
